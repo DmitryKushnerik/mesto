@@ -1,0 +1,10 @@
+.container {
+  margin: 0;
+  padding: 45px 0 60px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 880px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
