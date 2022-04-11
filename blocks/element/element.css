@@ -1,8 +1,9 @@
 .element {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   width: 282px;
-  height: 362px;
+  min-height: 361px;
   display: flex;
   flex-direction: column;
   align-items: center;
