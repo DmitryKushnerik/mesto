@@ -4,6 +4,10 @@
   position: absolute;
   right: -40px;
   top: -40px;
+  background: url('../../../images/popup-close.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
 }
 
 @media screen and (max-width: 639px) {

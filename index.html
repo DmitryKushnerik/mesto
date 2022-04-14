@@ -80,14 +80,14 @@
       </footer>
     </div>
     <div class="popup">
-      <form class="popup__container">
-        <p class="popup__title">Редактировать профиль</p>
+      <form class="popup__container" name="userform">
+        <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__user-info">
-          <input type="text" placeholder="Имя" class="popup__text-input popup__text-input_value_name">
-          <input type="text" placeholder="О себе" class="popup__text-input popup__text-input_value_job">
+          <input type="text" placeholder="Имя" class="popup__text-input popup__text-input_value_name" name="username">
+          <input type="text" placeholder="О себе" class="popup__text-input popup__text-input_value_job" name="userjob">
         </fieldset>
-        <input type="submit" value="Сохранить" class="popup__save-button">
-        <img src="./images/popup-close.svg" alt="Закрыть" class="popup__close interactive-item">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="button" class="popup__close interactive-item"></button>
       </form>
     </div>
   </div>
