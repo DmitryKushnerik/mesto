@@ -4,6 +4,9 @@
   position: absolute;
   right: -42px;
   top: 15px;
+  border: none;
+  background: url(../../../images/btn-edit.svg);
+  background-size: contain;
 }
 
 @media screen and (max-width: 639px) {
