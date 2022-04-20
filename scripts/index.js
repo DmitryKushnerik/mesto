@@ -56,11 +56,19 @@ for (let item of initialCards) {
 const deleteButtons = document.querySelectorAll('.element__delete-button');
 deleteButtons.forEach((item) => {
     console.log(item);
-    item.addEventListener('click', function (evt) {
+    item.addEventListener('click', (evt) => {
         const myCard = evt.target.closest('.element');
         console.log(myCard);
         myCard.remove();
     });
+});
+
+//Лайкнуть карточку
+const likeButtons = document.querySelectorAll('.element__like-button');
+likeButtons.forEach((item) => {
+  item.addEventListener('click', (evt) => {
+    evt.target.classList.toggle('element__like-button_active');
+  });
 });
 
 //Открыть попап для редактирования данных
