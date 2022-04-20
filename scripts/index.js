@@ -5,6 +5,52 @@ let userJob = document.querySelector('.profile__job');
 let editJob = document.querySelector('.popup__text-input_value_job');
 let popup = document.querySelector('.popup');
 let btnEdit = document.querySelector('.profile__edit-button');
+//Инициализация и создание карточек
+const initialCards = [
+  {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+const cardTemplate = document.querySelector('#card-template').content;
+console.log(cardTemplate);
+const cardList = document.querySelector('.elements');
+console.log(cardList);
+
+//Создание новой карточки
+function createCard(name, link) {
+  const newCard = cardTemplate.cloneNode(true);
+  console.log(newCard);
+  newCard.querySelector('.element__caption').textContent = name;
+  newCard.querySelector('.element__image').src = link;
+  cardList.append(newCard);
+}
+
+//Создание начальных карточек
+for (let item of initialCards) {
+  createCard(item.name, item.link);
+}
 
 //Открыть попап для редактирования данных
 function popupOpen() {

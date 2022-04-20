@@ -29,48 +29,7 @@
       </section>
       <section class="photo-grid">
         <ul class="elements">
-          <li class="element">
-            <img src="./images/img-grid-1.jpg" alt="Город Карачаевск" class="element__image">
-            <div class="element__info">
-              <h2 class="element__caption">Карачаевск</h2>
-              <button type="button" class="element__like-button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/img-grid-2.jpg" alt="Гора Эльбрус" class="element__image">
-            <div class="element__info">
-              <h2 class="element__caption">Гора Эльбрус</h2>
-              <button type="button" class="element__like-button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/img-grid-3.jpg" alt="Хребет Домбай" class="element__image">
-            <div class="element__info">
-              <h2 class="element__caption">Домбай</h2>
-              <button type="button" class="element__like-button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/img-grid-4.jpg" alt="Мыс Хобой" class="element__image">
-            <div class="element__info">
-              <h2 class="element__caption">Мыс Хобой</h2>
-              <button type="button" class="element__like-button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/img-grid-5.jpg" alt="Красоты Куршской косы" class="element__image">
-            <div class="element__info">
-              <h2 class="element__caption">Куршская коса</h2>
-              <button type="button" class="element__like-button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/img-grid-6.jpg" alt="Красоты Карелии" class="element__image">
-            <div class="element__info">
-              <h2 class="element__caption">Карелия</h2>
-              <button type="button" class="element__like-button"></button>
-            </div>
-          </li>
+          <!--Здесь будут карточки-->
         </ul>
       </section>
     </main>
@@ -89,6 +48,15 @@
       </form>
     </div>
   </div>
+  <template id="card-template">
+    <li class="element">
+      <img class="element__image">
+      <div class="element__info">
+        <h2 class="element__caption"></h2>
+        <button type="button" class="element__like-button"></button>
+      </div>
+    </li>
+  </template>
   <script src="./scripts/index.js"></script>
 </body>
 
