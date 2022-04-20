@@ -52,6 +52,17 @@ for (let item of initialCards) {
   createCard(item.name, item.link);
 }
 
+//Удаление карточки
+const deleteButtons = document.querySelectorAll('.element__delete-button');
+deleteButtons.forEach((item) => {
+    console.log(item);
+    item.addEventListener('click', function (evt) {
+        const myCard = evt.target.closest('.element');
+        console.log(myCard);
+        myCard.remove();
+    });
+});
+
 //Открыть попап для редактирования данных
 function popupOpen() {
   editName.value = userName.textContent;
