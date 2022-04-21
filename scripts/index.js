@@ -36,9 +36,9 @@ function createCard(name, link) {
   const newName = newCard.querySelector('.element__caption');
   newName.textContent = name;
   //Задать URL картинки
-  const newLink = newCard.querySelector('.element__image');
-  newLink.src = link;
-  newLink.alt = name;
+  const newImage = newCard.querySelector('.element__image');
+  newImage.src = link;
+  newImage.alt = name;
   //Кнопка лайка
   const newLike = newCard.querySelector('.element__like-button');
   newLike.addEventListener('click', (evt) => {
@@ -49,7 +49,14 @@ function createCard(name, link) {
   newDelete.addEventListener('click', (evt) => {
     const myCard = evt.target.closest('.element');
     myCard.remove();
-  });  
+  });
+  //Увеличение изображения
+  newImage.addEventListener('click',(evt) => {
+    let showName = evt.target.alt;
+    let showLink = evt.target.src;
+    popupShowOpen(showName, showLink);
+    alert('Клик');
+  });
   cardList.append(newCard);
 }
 
@@ -134,3 +141,14 @@ function formSubmitHandlerCard(evt) {
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElementCard.addEventListener('submit', formSubmitHandlerCard);
+
+//Открыть попап просмотра изображения
+const popupShow = document.querySelector('.popup-show');
+const galleryImage = document.querySelector('.gallery__image');
+const galleryTitle = document.querySelector('.gallery__title');
+
+function popupShowOpen(name, link) {
+  galleryTitle.textContent = name;
+  galleryImage.src = link;
+  popupShow.classList.add('popup_opened');
+};
