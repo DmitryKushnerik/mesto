@@ -36,17 +36,30 @@
     <footer class="footer">
       <p class="footer__text">&copy; 2022 Mesto Russia</p>
     </footer>
-    <div class="popup">
-      <form class="popup__container" name="userform">
+    <!--Форма редактирования профиля-->
+    <div class="popup popup-user">
+      <form class="popup__container form_type_user" name="userform">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <fieldset class="popup__user-info">
+        <fieldset class="popup__fieldset">
           <input type="text" placeholder="Имя" class="popup__text-input popup__text-input_value_name" name="username">
           <input type="text" placeholder="О себе" class="popup__text-input popup__text-input_value_job" name="userjob">
         </fieldset>
-        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="submit" class="popup__button popup__button_value_user">Сохранить</button>
         <button type="button" class="popup__close interactive-item"></button>
       </form>
     </div>
+    <!--Форма добавления карточки-->
+    <div class="popup popup-card">
+      <form class="popup__container form_type_card" name="cardform">
+        <h2 class="popup__title">Новое место</h2>
+        <fieldset class="popup__fieldset">
+          <input type="text" placeholder="Название" class="popup__text-input popup__text-input_value_place" name="cardplace">
+          <input type="text" placeholder="Ссылка на картинку" class="popup__text-input popup__text-input_value_link" name="cardlink">
+        </fieldset>
+        <button type="submit" class="popup__button popup__button_value_card">Создать</button>
+        <button type="button" class="popup__close interactive-item"></button>
+      </form>
+    </div>    
   </div>
   <template id="card-template">
     <li class="element">

@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     width: 18px;
-    height: 19.3px;
+    height: 19px;
     transition: opacity 0.5s ease-in;
     border: none;
     background: url('../../../images/btn-delete.svg');
