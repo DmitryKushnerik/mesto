@@ -30,7 +30,7 @@ const cardTemplate = document.querySelector('#card-template').content;
 const cardList = document.querySelector('.elements');
 
 //Создание новой карточки
-function createCard(name, link) {
+function createCard(name, link, position) {
   const newCard = cardTemplate.cloneNode(true);
   //Задать название
   const newName = newCard.querySelector('.element__caption');
@@ -139,7 +139,7 @@ const formElementCard = document.querySelector('.form_type_card');
 // она никуда отправляться не будет
 function formSubmitHandlerCard(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  createCard(cardPlace.value, cardLink.value);
+  createCard(cardPlace.value, cardLink.value, 'prepend');
   popupClose(popupCard);
 };
 
