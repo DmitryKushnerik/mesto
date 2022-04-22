@@ -56,7 +56,7 @@ function createCard(name, link) {
     let showLink = evt.target.src;
     popupShowOpen(showName, showLink);
   });
-  cardList.append(newCard);
+  cardList.prepend(newCard);
 }
 
 //Создание начальных карточек
