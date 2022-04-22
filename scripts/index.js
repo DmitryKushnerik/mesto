@@ -51,11 +51,10 @@ function createCard(name, link) {
     myCard.remove();
   });
   //Увеличение изображения
-  newImage.addEventListener('click',(evt) => {
+  newImage.addEventListener('click', (evt) => {
     let showName = evt.target.alt;
     let showLink = evt.target.src;
     popupShowOpen(showName, showLink);
-    alert('Клик');
   });
   cardList.append(newCard);
 }
@@ -72,18 +71,25 @@ const userJob = document.querySelector('.profile__job');
 const editJob = document.querySelector('.popup__text-input_value_job');
 const popupUser = document.querySelector('.popup-user');
 
+//Открыть попап (общий случай)
+function popupOpen(popup) {
+  popup.classList.add('popup_opened');
+  popup.style.animation = 'anim-show 1s forwards';
+};
+
 //Открыть попап для редактирования данных
 function popupUserOpen() {
+  popupOpen(popupUser);
   editName.value = userName.textContent;
   editJob.value = userJob.textContent;
-  popupUser.classList.add('popup_opened');
 };
 const btnEdit = document.querySelector('.profile__edit-button');
 btnEdit.addEventListener('click', popupUserOpen);
 
 //Закрыть попап (общий случай)
 function popupClose(popup) {
-  popup.classList.remove('popup_opened');
+  popup.style.animation='anim-hide 1s forwards';
+  setTimeout(() => {popup.classList.remove('popup_opened')}, 1000);
 };
 
 //Закрыть попап (нажатие на крестик)
@@ -121,12 +127,11 @@ const popupCard = document.querySelector('.popup-card')
 const cardPlace = document.querySelector('.popup__text-input_value_place');
 const cardLink = document.querySelector('.popup__text-input_value_link');
 btnCard.addEventListener('click', (evt) => {
-  popupCard.classList.add('popup_opened');
+  popupOpen(popupCard);
   cardPlace.value = '';
   cardLink.value = '';
 });
 
-//Сохранить изменения профиля
 // Находим форму в DOM
 const formElementCard = document.querySelector('.form_type_card');
 
@@ -148,7 +153,7 @@ const galleryImage = document.querySelector('.gallery__image');
 const galleryTitle = document.querySelector('.gallery__title');
 
 function popupShowOpen(name, link) {
+  popupOpen(popupShow);
   galleryTitle.textContent = name;
   galleryImage.src = link;
-  popupShow.classList.add('popup_opened');
 };
