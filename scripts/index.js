@@ -108,7 +108,7 @@ btnEdit.addEventListener('click', openPopupUser);
 
 //Сохранить изменения профиля
 // Находим форму в DOM
-const formElementCardUser = document.querySelector('.form_type_user');
+const formElementCardUser = document.querySelector('.form-user');
 // Находим поля формы в DOM
 const nameInput = formElementCardUser.querySelector('.popup__text-input_value_name');
 const jobInput = formElementCardUser.querySelector('.popup__text-input_value_job');
@@ -138,7 +138,7 @@ btnCard.addEventListener('click', (evt) => {
 });
 
 // Находим форму в DOM
-const formElementCard = document.querySelector('.form_type_card');
+const formElementCard = document.querySelector('.form-card');
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
