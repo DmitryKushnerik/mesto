@@ -52,9 +52,9 @@ function createCard(name, link) {
   });
   //Увеличение изображения
   newImage.addEventListener('click', (evt) => {
-    let showName = evt.target.alt;
-    let showLink = evt.target.src;
-    popupShowOpen(showName, showLink);
+    const showName = evt.target.alt;
+    const showLink = evt.target.src;
+    openPopupShow(showName, showLink);
   });
   cardList.prepend(newCard);
 }
@@ -72,22 +72,22 @@ const editJob = document.querySelector('.popup__text-input_value_job');
 const popupUser = document.querySelector('.popup-user');
 
 //Открыть попап (общий случай)
-function popupOpen(popup) {
+function openPopup(popup) {
   popup.classList.add('popup_opened');
   popup.style.animation = 'anim-show 1s forwards';
 };
 
 //Открыть попап для редактирования данных
-function popupUserOpen() {
-  popupOpen(popupUser);
+function openPopupUser() {
+  openPopup(popupUser);
   editName.value = userName.textContent;
   editJob.value = userJob.textContent;
 };
 const btnEdit = document.querySelector('.profile__edit-button');
-btnEdit.addEventListener('click', popupUserOpen);
+btnEdit.addEventListener('click', openPopupUser);
 
 //Закрыть попап (общий случай)
-function popupClose(popup) {
+function closePopup(popup) {
   popup.style.animation='anim-hide 1s forwards';
   setTimeout(() => {popup.classList.remove('popup_opened')}, 1000);
 };
@@ -97,7 +97,7 @@ const btnClose = document.querySelectorAll('.popup__close');
 btnClose.forEach((item) => {
   item.addEventListener('click', (evt) => {
     const myPopup = evt.target.closest('.popup');
-    popupClose(myPopup);
+    closePopup(myPopup);
   });
 });
 
@@ -114,7 +114,7 @@ function formSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   userName.textContent = nameInput.value;
   userJob.textContent = jobInput.value;
-  popupClose(popupUser);
+  closePopup(popupUser);
 };
 
 // Прикрепляем обработчик к форме:
@@ -127,7 +127,7 @@ const popupCard = document.querySelector('.popup-card')
 const cardPlace = document.querySelector('.popup__text-input_value_place');
 const cardLink = document.querySelector('.popup__text-input_value_link');
 btnCard.addEventListener('click', (evt) => {
-  popupOpen(popupCard);
+  openPopup(popupCard);
   cardPlace.value = '';
   cardLink.value = '';
 });
@@ -140,7 +140,7 @@ const formElementCard = document.querySelector('.form_type_card');
 function formSubmitHandlerCard(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   createCard(cardPlace.value, cardLink.value);
-  popupClose(popupCard);
+  closePopup(popupCard);
 };
 
 // Прикрепляем обработчик к форме:
@@ -152,8 +152,8 @@ const popupShow = document.querySelector('.popup-show');
 const galleryImage = document.querySelector('.gallery__image');
 const galleryTitle = document.querySelector('.gallery__title');
 
-function popupShowOpen(name, link) {
-  popupOpen(popupShow);
+function openPopupShow(name, link) {
+  openPopup(popupShow);
   galleryTitle.textContent = name;
   galleryImage.src = link;
 };
