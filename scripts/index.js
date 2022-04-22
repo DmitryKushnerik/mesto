@@ -30,26 +30,31 @@ const cardTemplate = document.querySelector('#card-template').content;
 const cardList = document.querySelector('.elements');
 
 //Создание новой карточки
-function createCard(name, link, position) {
+function createCard(name, link) {
   const newCard = cardTemplate.cloneNode(true);
+  
   //Задать название
   const newName = newCard.querySelector('.element__caption');
   newName.textContent = name;
+  
   //Задать URL картинки
   const newImage = newCard.querySelector('.element__image');
   newImage.src = link;
   newImage.alt = name;
+  
   //Кнопка лайка
   const newLike = newCard.querySelector('.element__like-button');
   newLike.addEventListener('click', (evt) => {
     evt.target.classList.toggle('element__like-button_active');
   });
+  
   //Кнопка удаления
   const newDelete = newCard.querySelector('.element__delete-button');
   newDelete.addEventListener('click', (evt) => {
     const myCard = evt.target.closest('.element');
     myCard.remove();
   });
+  
   //Увеличение изображения
   newImage.addEventListener('click', (evt) => {
     const showName = evt.target.alt;
@@ -64,32 +69,16 @@ for (let item of initialCards) {
   createCard(item.name, item.link);
 }
 
-//Переменные для работы с профилем
-const userName = document.querySelector('.profile__name');
-const editName = document.querySelector('.popup__text-input_value_name');
-const userJob = document.querySelector('.profile__job');
-const editJob = document.querySelector('.popup__text-input_value_job');
-const popupUser = document.querySelector('.popup-user');
-
 //Открыть попап (общий случай)
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   popup.style.animation = 'anim-show 1s forwards';
 };
 
-//Открыть попап для редактирования данных
-function openPopupUser() {
-  openPopup(popupUser);
-  editName.value = userName.textContent;
-  editJob.value = userJob.textContent;
-};
-const btnEdit = document.querySelector('.profile__edit-button');
-btnEdit.addEventListener('click', openPopupUser);
-
 //Закрыть попап (общий случай)
 function closePopup(popup) {
-  popup.style.animation='anim-hide 1s forwards';
-  setTimeout(() => {popup.classList.remove('popup_opened')}, 1000);
+  popup.style.animation = 'anim-hide 1s forwards';
+  setTimeout(() => { popup.classList.remove('popup_opened') }, 1000);
 };
 
 //Закрыть попап (нажатие на крестик)
@@ -100,6 +89,22 @@ btnClose.forEach((item) => {
     closePopup(myPopup);
   });
 });
+
+//Переменные для работы с профилем
+const userName = document.querySelector('.profile__name');
+const editName = document.querySelector('.popup__text-input_value_name');
+const userJob = document.querySelector('.profile__job');
+const editJob = document.querySelector('.popup__text-input_value_job');
+const popupUser = document.querySelector('.popup-user');
+
+//Открыть попап для редактирования данных
+function openPopupUser() {
+  openPopup(popupUser);
+  editName.value = userName.textContent;
+  editJob.value = userJob.textContent;
+};
+const btnEdit = document.querySelector('.profile__edit-button');
+btnEdit.addEventListener('click', openPopupUser);
 
 //Сохранить изменения профиля
 // Находим форму в DOM
