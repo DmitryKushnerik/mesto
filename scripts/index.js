@@ -33,12 +33,17 @@ function createCard(name, link) {
     const showLink = evt.target.src;
     openPopupShow(showName, showLink);
   });
+  return newCard;
+}
+
+function renderCard(name, link) {
+  const newCard = createCard(name, link);
   cardList.prepend(newCard);
 }
 
 //Создание начальных карточек
 for (let item of initialCards) {
-  createCard(item.name, item.link);
+  renderCard(item.name, item.link);
 }
 
 //Открыть попап (общий случай)
@@ -116,7 +121,7 @@ const formElementCard = document.querySelector('.form-card');
 // она никуда отправляться не будет
 function formSubmitHandlerCard(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  createCard(cardPlace.value, cardLink.value);
+  renderCard(cardPlace.value, cardLink.value);
   closePopup(popupCard);
 };
 
