@@ -5,7 +5,9 @@ let cardData = {
   name: '',
   link: ''
 };
+const photoGrid = document.querySelector('.photo-grid');
 const buttonsClose = document.querySelectorAll('.popup__close');
+const popupList = Array.from(document.querySelectorAll('.popup'));
 //Переменные для работы с профилем
 const buttonEdit = document.querySelector('.profile__edit-button');
 const userName = document.querySelector('.profile__name');
@@ -26,31 +28,37 @@ const cardLink = document.querySelector('.popup__text-input_value_link');
 const formElementCard = document.querySelector('.form-card');
 
 //Инициализация функций
+
+//Добавление обработчиков клика к таблице изображений, делегирование событий
+photoGrid.addEventListener('click',(evt) => {
+  //Кнопка лайка
+  if (evt.target.classList.contains('element__like-button')) {
+    evt.stopPropagation();
+    evt.target.classList.toggle('element__like-button_active');
+  } 
+  
+  //Кнопка удаления
+  if (evt.target.classList.contains('element__delete-button')) {
+    evt.stopPropagation();
+    const myCard = evt.target.closest('.element');
+    myCard.remove();
+  } 
+  
+  //Увеличение изображения
+  if (evt.target.classList.contains('element__image')) {
+    evt.stopPropagation();
+    const showName = evt.target.alt;
+    const showLink = evt.target.src;
+    openPopupShow(showName, showLink);
+  }
+});
+
+
 //Создание новой карточки
 function createCard(myCardData) {
   const newCard = cardTemplate.cloneNode(true);
   const newName = newCard.querySelector('.element__caption');
   const newImage = newCard.querySelector('.element__image');
-  const newLike = newCard.querySelector('.element__like-button');
-  const newDelete = newCard.querySelector('.element__delete-button');
-
-  //Кнопка лайка
-  newLike.addEventListener('click', (evt) => {
-    evt.target.classList.toggle('element__like-button_active');
-  });
-
-  //Кнопка удаления
-  newDelete.addEventListener('click', (evt) => {
-    const myCard = evt.target.closest('.element');
-    myCard.remove();
-  });
-
-  //Увеличение изображения
-  newImage.addEventListener('click', (evt) => {
-    const showName = evt.target.alt;
-    const showLink = evt.target.src;
-    openPopupShow(showName, showLink);
-  });
 
   newName.textContent = myCardData.name;
   newImage.src = myCardData.link;
@@ -76,6 +84,9 @@ function closePopup(popup) {
   popup.style.animation = 'anim-hide 1s forwards';
   setTimeout(() => { popup.classList.remove('popup_opened') }, 1000);
 };
+
+//Общие свойства попапов
+
 
 //Открыть попап для редактирования данных
 function openPopupUser() {
