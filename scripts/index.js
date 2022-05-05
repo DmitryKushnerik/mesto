@@ -30,20 +30,20 @@ const formElementCard = document.querySelector('.form-card');
 //Инициализация функций
 
 //Добавление обработчиков клика к таблице изображений, делегирование событий
-photoGrid.addEventListener('click',(evt) => {
+photoGrid.addEventListener('click', (evt) => {
   //Кнопка лайка
   if (evt.target.classList.contains('element__like-button')) {
     evt.stopPropagation();
     evt.target.classList.toggle('element__like-button_active');
-  } 
-  
+  }
+
   //Кнопка удаления
   if (evt.target.classList.contains('element__delete-button')) {
     evt.stopPropagation();
     const myCard = evt.target.closest('.element');
     myCard.remove();
-  } 
-  
+  }
+
   //Увеличение изображения
   if (evt.target.classList.contains('element__image')) {
     evt.stopPropagation();
@@ -52,7 +52,6 @@ photoGrid.addEventListener('click',(evt) => {
     openPopupShow(showName, showLink);
   }
 });
-
 
 //Создание новой карточки
 function createCard(myCardData) {
@@ -77,6 +76,7 @@ function renderCard(myCardData) {
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   popup.style.animation = 'anim-show 1s forwards';
+  popup.focus();
 };
 
 //Закрыть попап (общий случай)
@@ -86,7 +86,20 @@ function closePopup(popup) {
 };
 
 //Общие свойства попапов
+popupList.forEach((popup) => {
 
+  //Закрытие при клике на пустое место или крестик
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+      closePopup(popup);
+    }
+  });
+
+  //Закрытие при нажатии на esc
+  popup.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') { closePopup(popup) }
+  });
+});
 
 //Открыть попап для редактирования данных
 function openPopupUser() {
@@ -119,14 +132,6 @@ function openPopupShow(name, link) {
 };
 
 //Добавление обработчиков событий
-
-//Закрыть попап (нажатие на крестик)
-buttonsClose.forEach((item) => {
-  item.addEventListener('click', (evt) => {
-    const myPopup = evt.target.closest('.popup');
-    closePopup(myPopup);
-  });
-});
 
 //Открыть попап редактирования профиля
 buttonEdit.addEventListener('click', openPopupUser);
