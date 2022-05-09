@@ -8,24 +8,27 @@ let cardData = {
 const photoGrid = document.querySelector('.photo-grid');
 const buttonsClose = document.querySelectorAll('.popup__close');
 const popupList = Array.from(document.querySelectorAll('.popup'));
+const eventInput = new Event('input');
 //Переменные для работы с профилем
-const buttonEdit = document.querySelector('.profile__edit-button');
+const buttonEditUser = document.querySelector('.profile__edit-button');
 const userName = document.querySelector('.profile__name');
-const fieldName = document.querySelector('.popup__text-input_value_name');
+const fieldName = document.querySelector('.popup__input_value_name');
 const userJob = document.querySelector('.profile__job');
-const fieldJob = document.querySelector('.popup__text-input_value_job');
+const fieldJob = document.querySelector('.popup__input_value_job');
 const popupUser = document.querySelector('.popup-user');
 const formElementUser = document.querySelector('.form-user');
+const buttonSaveUser = document.querySelector('.popup__button_value_user');
 //Попап просмотра изображения
 const popupShow = document.querySelector('.popup-show');
 const galleryImage = document.querySelector('.gallery__image');
 const galleryTitle = document.querySelector('.gallery__title');
 //Добавление карточки через форму
-const buttonCard = document.querySelector('.profile__add-button');
+const buttonAddCard = document.querySelector('.profile__add-button');
 const popupCard = document.querySelector('.popup-card')
-const cardPlace = document.querySelector('.popup__text-input_value_place');
-const cardLink = document.querySelector('.popup__text-input_value_link');
+const cardPlace = document.querySelector('.popup__input_value_place');
+const cardLink = document.querySelector('.popup__input_value_link');
 const formElementCard = document.querySelector('.form-card');
+const buttonSaveCard = document.querySelector('.popup__button_value_card');
 
 //Инициализация функций
 
@@ -72,43 +75,57 @@ function renderCard(myCardData) {
   cardList.prepend(newCard);
 }
 
+//Установить значение input
+function setInputValue(inputElement, newValue) {
+  inputElement.value = newValue;
+  inputElement.dispatchEvent(eventInput);
+}
+
+  //Закрытие при клике попапа на пустое место или крестик
+  function closePopupClick(evt) {
+    console.log(evt);
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+      closePopup(evt.currentTarget);
+    }
+  };
+
+  //Закрытие при нажатии на esc
+  function closePopupEsc(evt) {
+    if (evt.key === 'Escape') { closePopup(evt.currentTarget) }
+  };
+
 //Открыть попап (общий случай)
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   popup.style.animation = 'anim-show 1s forwards';
   popup.focus();
+  popup.addEventListener('click',closePopupClick);
+  popup.addEventListener('keydown',closePopupClick);
 };
 
 //Закрыть попап (общий случай)
 function closePopup(popup) {
   popup.style.animation = 'anim-hide 1s forwards';
-  setTimeout(() => { popup.classList.remove('popup_opened') }, 1000);
+  popup.removeEventListener('click',closePopupClick);
+  popup.removeEventListener('keydown',closePopupClick);
+  setTimeout(() => {
+    popup.classList.remove('popup_opened');
+    const inputList = popup.querySelectorAll('.popup__input');
+    Array.from(inputList).forEach((item) => {
+      item.value = '';
+    })
+  }, 1000);
 };
 
-//Общие свойства попапов
-popupList.forEach((popup) => {
-
-  //Закрытие при клике на пустое место или крестик
-  popup.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
-      closePopup(popup);
-    }
-  });
-
-  //Закрытие при нажатии на esc
-  popup.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') { closePopup(popup) }
-  });
-});
-
-//Открыть попап для редактирования данных
+//Открыть попап для редактирования данных о пользователе
 function openPopupUser() {
   openPopup(popupUser);
-  fieldName.value = userName.textContent;
-  fieldJob.value = userJob.textContent;
+  setInputValue(fieldName, userName.textContent);
+  setInputValue(fieldJob, userJob.textContent);
+  toggleButtonState([fieldName, fieldJob], buttonSaveUser);
 };
 
-// Обработчик «отправки» формы редактирования профиля, хотя пока она никуда отправляться не будет
+// Сохранить данные о пользователе
 function formSubmitHandlerUser(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   userName.textContent = fieldName.value;
@@ -116,7 +133,27 @@ function formSubmitHandlerUser(evt) {
   closePopup(popupUser);
 };
 
-// Обработчик «отправки» формы добавления карточки, хотя пока она никуда отправляться не будет
+//Открыть попап для добавления новой карточки
+function openPopupCard() {
+  openPopup(popupCard);
+  const inputList = Array.from(popupCard.querySelectorAll('.popup__input'));
+  inputList.forEach((inputElement) => {
+    hideInputError(popupCard, inputElement)
+  });
+  cardPlace.value = '';
+  cardLink.value = '';
+  toggleButtonState([cardPlace, cardLink], buttonSaveCard);
+};
+
+//Нажатие на кнопку сохранения (проверка до отправки формы)
+buttonSaveCard.addEventListener('click', (evt) => {
+  const inputList = Array.from(popupCard.querySelectorAll('.popup__input'));
+  inputList.forEach((inputElement) => {
+    checkInputValidity(popupCard, inputElement);
+  });
+});
+
+// Добавление новой карточки
 function formSubmitHandlerCard(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   cardData.name = cardPlace.value;
@@ -125,6 +162,7 @@ function formSubmitHandlerCard(evt) {
   closePopup(popupCard);
 };
 
+//Открыть увеличенное изображение для просмотра
 function openPopupShow(name, link) {
   openPopup(popupShow);
   galleryTitle.textContent = name;
@@ -134,17 +172,13 @@ function openPopupShow(name, link) {
 //Добавление обработчиков событий
 
 //Открыть попап редактирования профиля
-buttonEdit.addEventListener('click', openPopupUser);
+buttonEditUser.addEventListener('click', openPopupUser);
 
 //Сохранить изменения профиля через отправку формы
 formElementUser.addEventListener('submit', formSubmitHandlerUser);
 
 //Открыть попап добавления карточки
-buttonCard.addEventListener('click', (evt) => {
-  openPopup(popupCard);
-  cardPlace.value = '';
-  cardLink.value = '';
-});
+buttonAddCard.addEventListener('click', openPopupCard);
 
 //Добавить новую карточку через отправку формы
 formElementCard.addEventListener('submit', formSubmitHandlerCard);

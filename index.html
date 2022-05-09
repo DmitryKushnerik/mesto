@@ -38,11 +38,19 @@
     </footer>
     <!--Форма редактирования профиля-->
     <div class="popup popup-user" tabindex="0">
-      <form class="popup__container form-user" name="userform">
+      <form class="popup__form form-user" id="userform" name="userform">
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__fieldset">
-          <input type="text" placeholder="Имя" class="popup__text-input popup__text-input_value_name" name="username">
-          <input type="text" placeholder="О себе" class="popup__text-input popup__text-input_value_job" name="userjob">
+          <div class="popup__input-group">
+            <input type="text" placeholder="Имя" class="popup__input popup__input_value_name" id="name-input"
+              name="username" required minlength="2" maxlength="40">
+            <span class="popup__error name-input-error"></span>
+          </div>
+          <div class="popup__input-group">
+            <input type="text" placeholder="О себе" class="popup__input popup__input_value_job" id="job-input"
+              name="userjob" required minlength="2" maxlength="200">
+            <span class="popup__error job-input-error"></span>
+          </div>
         </fieldset>
         <button type="submit" class="popup__button popup__button_value_user">Сохранить</button>
         <button type="button" class="popup__close interactive-item"></button>
@@ -50,13 +58,19 @@
     </div>
     <!--Форма добавления карточки-->
     <div class="popup popup-card" tabindex="0">
-      <form class="popup__container form-card" name="cardform">
+      <form class="popup__form form-card" name="cardform">
         <h2 class="popup__title">Новое место</h2>
         <fieldset class="popup__fieldset">
-          <input type="text" placeholder="Название" class="popup__text-input popup__text-input_value_place"
-            name="cardplace">
-          <input type="url" placeholder="Ссылка на картинку" class="popup__text-input popup__text-input_value_link"
-            name="cardlink">
+          <div class="popup__input-group">
+            <input type="text" placeholder="Название" class="popup__input popup__input_value_place" id="place-input"
+              name="cardplace" required minlength="2" maxlength="30">
+            <span class="popup__error place-input-error"></span>
+          </div>
+          <div class="popup__input-group">
+            <input type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_value_link"
+              id="url-input" name="cardlink" required>
+            <span class="popup__error url-input-error"></span>
+          </div>
         </fieldset>
         <button type="submit" class="popup__button popup__button_value_card">Создать</button>
         <button type="button" class="popup__close interactive-item"></button>
@@ -82,6 +96,7 @@
     </li>
   </template>
   <script src="./scripts/cards.js"></script>
+  <script src="./scripts/validate.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 
