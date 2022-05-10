@@ -1,10 +1,6 @@
 //Инициализация переменных
 const cardTemplate = document.querySelector('#card-template').content;
 const cardList = document.querySelector('.elements');
-const cardData = {
-  name: '',
-  link: ''
-};
 const buttonsClose = document.querySelectorAll('.popup__close');
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const eventInput = new Event('input');
@@ -52,9 +48,7 @@ function createCard(myCardData) {
 
   //Увеличение изображения
   newImage.addEventListener('click', (evt) => {
-    const showName = evt.target.alt;
-    const showLink = evt.target.src;
-    openPopupShow(showName, showLink);
+    openPopupShow(myCardData.name, myCardData.link);
   });
 
   newName.textContent = myCardData.name;
@@ -125,19 +119,13 @@ function openPopupCard() {
   toggleButtonState([cardPlace, cardLink], buttonSaveCard);
 };
 
-//Нажатие на кнопку сохранения (проверка до отправки формы)
-buttonSaveCard.addEventListener('click', (evt) => {
-  const inputList = Array.from(popupCard.querySelectorAll('.popup__input'));
-  inputList.forEach((inputElement) => {
-    checkInputValidity(popupCard, inputElement);
-  });
-});
-
 // Добавление новой карточки
 function formSubmitHandlerCard(evt) {
+  const cardData = {
+    name: cardPlace.value,
+    link: cardLink.value
+  }
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  cardData.name = cardPlace.value;
-  cardData.link = cardLink.value;
   formElementCard.reset();
   renderCard(cardData);
   closePopup(popupCard);
@@ -171,8 +159,4 @@ formElementCard.addEventListener('submit', formSubmitHandlerCard);
 
 //Код скрипта
 //Создание начальных карточек
-initialCards.forEach((item) => {
-  cardData.name = item.name;
-  cardData.link = item.link;
-  renderCard(cardData);
-});
+initialCards.forEach(card => renderCard({ name: card.name, link: card.link }));
