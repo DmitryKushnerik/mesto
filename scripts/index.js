@@ -1,7 +1,8 @@
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+
 //Инициализация переменных
-const cardTemplate = document.querySelector('#card-template').content;
 const cardList = document.querySelector('.elements');
-const buttonsClose = document.querySelectorAll('.popup__close');
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const eventInput = new Event('input');
 //Переменные для работы с профилем
@@ -26,43 +27,6 @@ const formElementCard = document.querySelector('.form-card');
 const buttonSaveCard = document.querySelector('.popup__button_value_card');
 
 //Инициализация функций
-
-//Создание новой карточки
-function createCard(myCardData) {
-  const newCard = cardTemplate.cloneNode(true);
-  const newName = newCard.querySelector('.element__caption');
-  const newImage = newCard.querySelector('.element__image');
-  const newLike = newCard.querySelector('.element__like-button');
-  const newDelete = newCard.querySelector('.element__delete-button');
-
-  //Кнопка лайка
-  newLike.addEventListener('click', (evt) => {
-    evt.target.classList.toggle('element__like-button_active');
-  });
-
-  //Кнопка удаления
-  newDelete.addEventListener('click', (evt) => {
-    const myCard = evt.target.closest('.element');
-    myCard.remove();
-  });
-
-  //Увеличение изображения
-  newImage.addEventListener('click', (evt) => {
-    openPopupShow(myCardData.name, myCardData.link);
-  });
-
-  newName.textContent = myCardData.name;
-  newImage.src = myCardData.link;
-  newImage.alt = myCardData.name;
-
-  return newCard;
-}
-
-//Добавление новой карточки в DOM
-function renderCard(myCardData) {
-  const newCard = createCard(myCardData);
-  cardList.prepend(newCard);
-}
 
 //Установить значение input
 function setInputValue(inputElement, newValue) {
@@ -102,12 +66,12 @@ function openPopupUser() {
   openPopup(popupUser);
   setInputValue(fieldName, userName.textContent);
   setInputValue(fieldJob, userJob.textContent);
-  toggleButtonState([fieldName, fieldJob], buttonSaveUser);
+  formValidatorUser._toggleButtonState([fieldName, fieldJob], buttonSaveUser);
 };
 
 // Сохранить данные о пользователе
 function formSubmitHandlerUser(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  evt.preventDefault();
   userName.textContent = fieldName.value;
   userJob.textContent = fieldJob.value;
   closePopup(popupUser);
@@ -116,23 +80,32 @@ function formSubmitHandlerUser(evt) {
 //Открыть попап для добавления новой карточки
 function openPopupCard() {
   openPopup(popupCard);
-  toggleButtonState([cardPlace, cardLink], buttonSaveCard);
+  formValidatorCard._toggleButtonState([cardPlace, cardLink], buttonSaveCard);
 };
 
-// Добавление новой карточки
+//создание и добавление новой карточки
+function addNewCard(data, template) {
+  const card = new Card(data, template);
+  const cardElement = card.generateCard();
+  cardList.prepend(cardElement);
+}
+
+// Добавление новой карточки через форму
 function formSubmitHandlerCard(evt) {
   const cardData = {
     name: cardPlace.value,
     link: cardLink.value
   }
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+
+  addNewCard(cardData, '#card-template');
+
+  evt.preventDefault();
   formElementCard.reset();
-  renderCard(cardData);
   closePopup(popupCard);
 };
 
 //Открыть увеличенное изображение для просмотра
-function openPopupShow(name, link) {
+export function openPopupShow(name, link) {
   openPopup(popupShow);
   galleryTitle.textContent = name;
   galleryImage.src = link;
@@ -159,4 +132,20 @@ formElementCard.addEventListener('submit', formSubmitHandlerCard);
 
 //Код скрипта
 //Создание начальных карточек
-initialCards.forEach(card => renderCard({ name: card.name, link: card.link }));
+initialCards.forEach((item) => {
+  addNewCard(item, '#card-template');
+});
+
+const validation = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+
+const formValidatorUser = new FormValidator(validation, popupUser);
+formValidatorUser.enableValidation();
+
+const formValidatorCard = new FormValidator(validation, popupCard);
+formValidatorCard.enableValidation();
