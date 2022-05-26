@@ -66,11 +66,11 @@ function openPopupUser() {
   openPopup(popupUser);
   setInputValue(fieldName, userName.textContent);
   setInputValue(fieldJob, userJob.textContent);
-  formValidatorUser._toggleButtonState([fieldName, fieldJob], buttonSaveUser);
+  formValidatorUser.resetValidation();
 };
 
 // Сохранить данные о пользователе
-function formSubmitHandlerUser(evt) {
+function handleFormSubmitUser(evt) {
   evt.preventDefault();
   userName.textContent = fieldName.value;
   userJob.textContent = fieldJob.value;
@@ -80,24 +80,30 @@ function formSubmitHandlerUser(evt) {
 //Открыть попап для добавления новой карточки
 function openPopupCard() {
   openPopup(popupCard);
-  formValidatorCard._toggleButtonState([cardPlace, cardLink], buttonSaveCard);
+  formValidatorCard.resetValidation();
 };
 
-//создание и добавление новой карточки
-function addNewCard(data, template) {
-  const card = new Card(data, template);
+//Создание новой карточки
+function createCard(data, template, handleCardClick) {
+  const card = new Card(data, template, handleCardClick);
   const cardElement = card.generateCard();
-  cardList.prepend(cardElement);
+  return cardElement;
+}
+
+//Добавление новой карточки в DOM
+function renderCard(newCard) {
+  cardList.prepend(newCard);
 }
 
 // Добавление новой карточки через форму
-function formSubmitHandlerCard(evt) {
+function handleFormSubmitCard(evt) {
   const cardData = {
     name: cardPlace.value,
     link: cardLink.value
   }
 
-  addNewCard(cardData, '#card-template');
+  const newCard = createCard(cardData, '#card-template', handleCardClick);
+  renderCard(newCard);
 
   evt.preventDefault();
   formElementCard.reset();
@@ -105,10 +111,11 @@ function formSubmitHandlerCard(evt) {
 };
 
 //Открыть увеличенное изображение для просмотра
-export function openPopupShow(name, link) {
-  openPopup(popupShow);
+function handleCardClick(name, link) {
   galleryTitle.textContent = name;
   galleryImage.src = link;
+  galleryImage.alt = name;
+  openPopup(popupShow);
 };
 
 //Добавление обработчиков событий
@@ -122,18 +129,19 @@ popupList.forEach((popup) => {
 buttonEditUser.addEventListener('click', openPopupUser);
 
 //Сохранить изменения профиля через отправку формы
-formElementUser.addEventListener('submit', formSubmitHandlerUser);
+formElementUser.addEventListener('submit', handleFormSubmitUser);
 
 //Открыть попап добавления карточки
 buttonAddCard.addEventListener('click', openPopupCard);
 
 //Добавить новую карточку через отправку формы
-formElementCard.addEventListener('submit', formSubmitHandlerCard);
+formElementCard.addEventListener('submit', handleFormSubmitCard);
 
 //Код скрипта
 //Создание начальных карточек
 initialCards.forEach((item) => {
-  addNewCard(item, '#card-template');
+  const newCard = createCard(item, '#card-template', handleCardClick);
+  renderCard(newCard);
 });
 
 const validation = {
