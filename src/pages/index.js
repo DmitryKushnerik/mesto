@@ -1,6 +1,6 @@
 import './index.css';
 //Импорт констант и классов
-import { initialCards } from '../utils/data.js';
+import { initialCards, validation } from '../utils/data.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
@@ -15,11 +15,8 @@ function handleUserSubmit(formDataUser) {
 
 function handleUserOpen() {
   const userInfoNow = userData.getUserInfo();
-  Array.from(popupUser.form.elements).forEach((item) => {
-    if (item.name in userInfoNow) {
-      item.value = userInfoNow[item.name]
-    }
-  })
+  userNameInput.value = userInfoNow.userName;
+  userJobInput.value = userInfoNow.userJob;
   formValidatorUser.resetValidation();
 }
 
@@ -35,12 +32,16 @@ function handleCardClick() {
   popupImage.open(this._name, this._link);
 }
 
-function handleCardRenderer(item) {
+function createCard(item) {
   const card = new Card(item, '#card-template', handleCardClick);
   const cardElement = card.generateCard();
-  cardList.addItem(cardElement);
+  return cardElement;
 }
 
+function handleCardRenderer(item) {
+  const cardElement = createCard(item);
+  cardList.addItem(cardElement);
+}
 
 //Создание попапов
 const popupUser = new PopupWithForm('.popup-user', handleUserSubmit, handleUserOpen);
@@ -65,15 +66,6 @@ const cardList = new Section({
 
 cardList.renderItems();
 
-
-const validation = {
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-}
-
 const formValidatorUser = new FormValidator(validation, popupUser.form);
 formValidatorUser.enableValidation();
 
@@ -81,3 +73,6 @@ const formValidatorCard = new FormValidator(validation, popupCard.form);
 formValidatorCard.enableValidation();
 
 const userData = new UserInfo({ nameSelector: '.profile__name', jobSelector: '.profile__job' });
+
+const userNameInput = document.querySelector('.popup__input_value_name');
+const userJobInput = document.querySelector('.popup__input_value_job');
