@@ -9,7 +9,7 @@
 .profile__avatar-group{margin:0;padding:0;position:relative}
 .profile__avatar-button{background:url(images/btn-avatar.a086f758840ae814ecde.svg);background-position:50%;background-repeat:no-repeat;background-size:26px 26px;border:none;border-radius:50%;display:block;height:120px;left:0;position:absolute;top:0;width:120px}
 .profile__avatar-overlay{background-color:rgba(0,0,0,.8);border-radius:50%;display:block;height:120px;left:0;margin:0;opacity:0;padding:0;position:absolute;top:0;transition:opacity .5s ease-in;width:120px}.profile__avatar-overlay:hover{opacity:1}
-.profile__avatar{border:none;border-radius:50%;height:120px;margin:0;-o-object-fit:cover;object-fit:cover;-o-object-position:center;object-position:center;overflow:hidden;padding:0;position:relative;width:120px}
+.profile__avatar{border:none;border-radius:50%;height:120px;margin:0;-o-object-fit:cover;object-fit:cover;-o-object-position:center;object-position:center;overflow:hidden;padding:0;width:120px}
 .profile__info{align-items:flex-start;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;line-height:0;margin:0;min-height:120px;overflow:hidden;padding:22px 0 0;position:relative;width:calc(100% - 30px)}@media screen and (max-width:639px){.profile__info{align-items:center;min-height:54px;padding:26px 0 32px;width:100%}}
 .profile__caption{display:inline-block;max-width:calc(100% - 42px);position:relative}
 .profile__name{display:inline-block;font-size:42px;font-weight:500;line-height:1.14;margin:0;max-width:100%;overflow:hidden;padding:0;text-overflow:ellipsis;white-space:nowrap;width:100%}@media screen and (max-width:639px){.profile__name{font-size:27px;line-height:1.222;max-width:200px;text-align:center}}
