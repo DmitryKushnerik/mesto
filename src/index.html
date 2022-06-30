@@ -17,17 +17,17 @@
     <main class="content">
       <section class="profile">
         <div class="profile__avatar-group">
-          <img alt="Аватар пользователя" class="profile__avatar">
+          <img src="<%=require('./images/noavatar.png')%>" alt="Аватар пользователя" class="profile__avatar">
           <div class="profile__avatar-overlay">
             <button class="profile__avatar-button"></button>
           </div>
         </div>
         <div class="profile__info">
           <div class="profile__caption">
-            <h1 class="profile__name"></h1>
+            <h1 class="profile__name">Имя пользователя</h1>
             <button type="button" class="profile__edit-button interactive-item"></button>
           </div>
-          <p class="profile__job"></p>
+          <p class="profile__job">О пользователе</p>
         </div>
         <button type="button" class="profile__add-button interactive-item"></button>
       </section>
