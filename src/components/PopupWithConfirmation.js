@@ -8,6 +8,15 @@ export default class PopupWithConfirmation extends Popup {
     this.button = this.form.querySelector('.popup__button');
   }
 
+  setButtonText(text) {
+    this.button.textContent = text;
+  }
+
+  setDeleteCard(card, id) {
+    this.cardForDelete = card;
+    this.idForDelete = id;
+  }
+
   open() {
     super.open();
   }
@@ -17,8 +26,8 @@ export default class PopupWithConfirmation extends Popup {
 
     this.form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._handleFormSubmit();
-      this.close();
+      this._handleFormSubmit(this.cardForDelete, this.idForDelete);
+      this.setDeleteCard(null, '');
     });
   }
 
